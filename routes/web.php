@@ -1,21 +1,21 @@
 <?php
 
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\DocumentController;
-use App\Http\Controllers\DocumentStatusController;
-use App\Http\Controllers\DocumentTypeController;
-use App\Http\Controllers\LawController;
-use App\Http\Controllers\LawProjectController;
-use App\Http\Controllers\LawProjectSituationController;
-use App\Http\Controllers\LawProjectStatusController;
-use App\Http\Controllers\LawProjectStepController;
-use App\Http\Controllers\PollController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
-use App\Models\Department;
-use App\Models\LawProject;
-use App\Models\LawProjectStatus;
+use App\Http\Controllers\{
+    AuthorController,
+    DepartmentController,
+    DocumentController,
+    DocumentStatusController,
+    DocumentTypeController,
+    LawController,
+    LawProjectController,
+    LawProjectSituationController,
+    LawProjectStatusController,
+    LawProjectStepController,
+    PollController,
+    PostController,
+    UserController,
+};
+
 use Illuminate\Support\Facades\Route;
 
 /*
