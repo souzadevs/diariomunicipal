@@ -1,1 +1,84 @@
-"use strict";var KTSigninGeneral=function(){var t,e,i;return{init:function(){t=document.querySelector("#kt_sign_in_form"),e=document.querySelector("#kt_sign_in_submit"),i=FormValidation.formValidation(t,{fields:{email:{validators:{notEmpty:{message:"Email address is required"},emailAddress:{message:"The value is not a valid email address"}}},password:{validators:{notEmpty:{message:"The password is required"}}}},plugins:{trigger:new FormValidation.plugins.Trigger,bootstrap:new FormValidation.plugins.Bootstrap5({rowSelector:".fv-row"})}}),e.addEventListener("click",(function(n){n.preventDefault(),i.validate().then((function(i){"Valid"==i?(e.setAttribute("data-kt-indicator","on"),e.disabled=!0,setTimeout((function(){e.removeAttribute("data-kt-indicator"),e.disabled=!1,Swal.fire({text:"You have successfully logged in!",icon:"success",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}}).then((function(e){e.isConfirmed&&(t.querySelector('[name="email"]').value="",t.querySelector('[name="password"]').value="")}))}),2e3)):Swal.fire({text:"Sorry, looks like there are some errors detected, please try again.",icon:"error",buttonsStyling:!1,confirmButtonText:"Ok, got it!",customClass:{confirmButton:"btn btn-primary"}})}))}))}}}();KTUtil.onDOMContentLoaded((function(){KTSigninGeneral.init()}));
+"use strict";
+var KTSigninGeneral = function () {
+    var formElement, btnSubmitElement, formValidator;
+    return {
+        init: function () {
+
+            formElement = document.querySelector("#kt_sign_in_form");
+            btnSubmitElement = document.querySelector("#kt_sign_in_submit");
+
+            formValidator = FormValidation.formValidation(formElement, {
+                fields: {
+                    email: {
+                        validators: {
+                            notEmpty: { message: "Email obrigatório" },
+                            emailAddress: { message: "Formato de email inválido" }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: { message: "Senha obrigatória" }
+                        }
+                    }
+                },
+                plugins: { trigger: new FormValidation.plugins.Trigger, bootstrap: new FormValidation.plugins.Bootstrap5({ rowSelector: ".fv-row" }) }
+            });
+
+            btnSubmitElement.addEventListener("click", (function (e) {
+
+                e.preventDefault();
+
+                formValidator.validate().then((function (i) {
+
+                    if (i == 'Valid') {
+
+                        // Fazer consulta ajax com as credenciai
+                        
+                        axios({
+                            method: 'post',
+                            url: routeSignIn,
+                            data: {
+                                firstName: document.getElementById('email'),
+                                lastName: document.getElementById('password')
+                            }
+                        });
+
+                        btnSubmitElement.setAttribute("data-kt-indicator", "on");
+                        btnSubmitElement.disabled = !0;
+
+                        setTimeout((function () {
+                            btnSubmitElement.removeAttribute("data-kt-indicator"),
+                                btnSubmitElement.disabled = !1,
+                                Swal.fire({
+                                    text: "Você foi autênticado com sucesso!",
+                                    icon: "success",
+                                    buttonsStyling: !1,
+                                    confirmButtonText: "Ok, vamos lá!",
+                                    customClass: { confirmButton: "btn btn-primary" }
+                                }).then(
+                                    (function (e) {
+                                        e.isConfirmed && (formElement.querySelector('[name="email"]').value = "",
+                                            formElement.querySelector('[name="password"]').value = "")
+
+                                        // window.location.href = '/';
+                                    }))
+                        }), 1000)
+
+                    } else {
+
+                        Swal.fire({
+                            text: "Ops! Algo deu errado, espere alguns segundos e tente novamente.",
+                            icon: "error",
+                            buttonsStyling: !1,
+                            confirmButtonText: "Ok!",
+                            customClass: { confirmButton: "btn btn-primary" }
+                        })
+
+                    }
+
+                }))
+            }))
+        }
+    }
+}();
+KTUtil.onDOMContentLoaded((function () { KTSigninGeneral.init() }));
