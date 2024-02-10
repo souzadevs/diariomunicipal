@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Repositories\Auth;
+namespace App\Exceptions\Repositories\User;
 
 use Exception;
 
