@@ -33,30 +33,29 @@ Route::get('/', function ($locale = null) {
     return redirect('/' .config('locales.default'));
 });
 
-Route::prefix('/{locale?}')->group(function() {
+Route::prefix('/')->group(function() {
 
-    Route::get('/', function ($locale = null) {
+    // Route::get('/', function ($locale = null) {
         
-        if ($locale && in_array($locale, config( 'locales'))) {
-            App::setLocale($locale);
-        } else {
-            return redirect('/' .config('locales.default'));
-        }
+    //     if ($locale && in_array($locale, config( 'locales'))) {
+    //         App::setLocale($locale);
+    //     } else {
+    //         return redirect('/' .config('locales.default'));
+    //     }
         
-        return view('index');
+    //     return view('index');
 
-    });
+    // });
 
-
-    Route::prefix('auth')->group(function() {
+    Route::prefix('/auth')->group(function() {
     
         Route::get('sign-in', [LoginController::class, 'viewSignIn']);
-        Route::post('sign-in', [LoginController::class, 'signIn']);
+        Route::post('/sign-in', [LoginController::class, 'signIn'])->name('auth.sign-in');
     
-        Route::get('sign-out', [LoginController::class, 'signOut']);
+        Route::get('sign-out', [LoginController::class, 'signOut'])->name('auth.sign-out');
     
         Route::get('sign-up', [LoginController::class, 'viewSignUp']);
-        Route::post('sign-up', [LoginController::class, 'signUp']);
+        Route::post('sign-up', [LoginController::class, 'signUp'])->name('auth.sign-up');
         
     });
     
