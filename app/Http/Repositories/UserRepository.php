@@ -9,14 +9,15 @@ use Exception;
 class UserRepository
 {
 
-    public static function create($email, $password, $firstName, $lastName): User
+    public static function create($email, $password, $firstName, $lastName, $userTypeId): User
     {
         $user = new User();
 
         $user->email = $email;
         $user->password = bcrypt($password);
-        $user->firstName = $firstName;
-        $user->lastName = $lastName;
+        $user->first_name = $firstName;
+        $user->last_name = $lastName;
+        $user->user_type_id = $userTypeId;
 
         try {
             $user->save();

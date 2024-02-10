@@ -6,5 +6,5 @@ use App\Models\User;
 
 interface ISignUp
 {
-    public function signUp($email, $password, $firstName, $lastName): User;
+    public function signUp($email, $password, $firstName, $lastName, $userTypeId): User;
 }

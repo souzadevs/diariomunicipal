@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Events\NewUser;
-use App\Exceptions\Repositories\Auth\CreateUserFailException;
+use App\Exceptions\Repositories\User\CreateUserFailException;
 use App\Exceptions\Repositories\Auth\EmailOrPasswordInvalidException;
+use App\Exceptions\Services\EmptyParamException;
 use App\Services\Auth\SignIn\ISignIn;
 use App\Services\Auth\SignUp\ISignUp;
 use App\Helpers\ResponseHelper;
@@ -27,6 +28,7 @@ class LoginController extends Controller
 
     public function signIn(Request $request, ISignIn $signInService) 
     {
+        dd('here', $request->all());
         $email = $request->input('email');
         $password = $request->input('password');
         
@@ -49,12 +51,14 @@ class LoginController extends Controller
         
         try {
 
-            $user = $signupService->signUp($email, $password, $firstName, $lastName);
+            $user = $signupService->signUp($email, $password, $firstName, $lastName, 5);
 
             NewUser::dispatch($user);
 
             return view('index');
 
+        } catch (EmptyParamException $e) {
+            return ResponseHelper::error(__('repositories/user.create_error'), $e->getMessage());
         } catch (CreateUserFailException $e) {
             return ResponseHelper::error(__('repositories/user.create_error'), $e->getMessage());
         } catch (Exception $e) {
