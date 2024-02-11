@@ -36,6 +36,8 @@ class LoginController extends Controller
     public function signIn(Request $request, ISignIn $signInService) 
     {
         
+        // TODO usar AuthRequestValidation $request ao invés de Request $request
+
         $email = $request->input('email');
         $password = $request->input('password');
 
