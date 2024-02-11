@@ -14,5 +14,6 @@ return [
     */
 
     'create_error' => 'Não foi possível cadastrar o usuário.',
+    'create_success' => 'Usuário cadastrado com sucesso.',
 
 ];

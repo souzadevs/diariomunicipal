@@ -40,4 +40,19 @@ class UserRepositoryTest extends TestCase
             null,
         );
     }
+
+    public function testShouldBeValidWhenEmailAlreadyExists()
+    {
+        
+        $this->expectException(Exception::class);
+
+        $user = UserRepository::create(
+            config('test.valid_email'),
+            '123',
+            'Jailmon',
+            'Sendes',
+            5
+        );
+
+    }
 }

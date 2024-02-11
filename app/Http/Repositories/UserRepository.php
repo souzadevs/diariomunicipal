@@ -9,6 +9,11 @@ use Exception;
 class UserRepository
 {
 
+    public static function emailExists($email): bool
+    {
+        return User::where('email', $email)->exists();
+    }
+
     public static function create($email, $password, $firstName, $lastName, $userTypeId): User
     {
         $user = new User();

@@ -8,13 +8,17 @@ use App\Exceptions\Repositories\Auth\UserInvalidPasswordException;
 use App\Http\Repositories\AuthRepository;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class SignIn implements ISignIn
 {
     public function signIn($email, $password)
     {
         try {
-            AuthRepository::auth($email, $password);
+
+            $user = AuthRepository::auth($email, $password);
+            Auth::login($user);
+            
         } catch (UserInvalidPasswordException $e) {
             throw new EmailOrPasswordInvalidException('Email e/ou senha inválido(s)');
         } catch (UserEmailNotFoundException $e) {

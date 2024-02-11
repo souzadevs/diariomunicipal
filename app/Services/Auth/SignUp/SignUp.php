@@ -17,6 +17,10 @@ class SignUp implements ISignUp
         if (ServiceHelper::hasEmptyParam($email, $password, $firstName, $lastName, $userTypeId)) {
             throw new EmptyParamException('Empty parameter.');
         }
+
+        if (UserRepository::emailExists($email)) {
+            throw new CreateUserFailException('Email já está sendo usado.');
+        }
         
         try {
             return UserRepository::create($email, $password, $firstName, $lastName, $userTypeId);

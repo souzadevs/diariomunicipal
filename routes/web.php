@@ -17,6 +17,7 @@ use App\Http\Controllers\{
     UserController,
 };
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,8 +31,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function ($locale = null) {
-    return redirect('/' .config('locales.default'));
-});
+    // return redirect('/' .config('locales.default'));
+    
+    if(Auth::check()) {
+        return view('admin.index');
+    } else {
+        return view('landing');
+    }
+
+})->name('index');
 
 Route::prefix('/')->group(function() {
 
@@ -58,9 +66,13 @@ Route::prefix('/')->group(function() {
         Route::post('sign-up', [LoginController::class, 'signUp'])->name('auth.sign-up');
         
     });
+
+    Route::prefix('admin')->group(function() {
+        Route::get('index', [LoginController::class, 'index']);
+    })->name('admin.index');
     
     Route::prefix('management')->group(function() {
-    
+
         Route::prefix('author')->group(function() {
             Route::get('index', [AuthorController::class, 'index']);
             Route::post('store', [AuthorController::class, 'store']);
