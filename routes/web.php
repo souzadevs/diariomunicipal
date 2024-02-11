@@ -180,7 +180,7 @@ Route::prefix('/')->group(function() {
         });
     
         Route::prefix('user')->group(function() {
-            //  Route::get('index', [UserController::class, 'index']);
+             Route::get('list', [UserController::class, 'list'])->name('admin.user.list');
             //  Route::post('store', [UserController::class, 'store']);
             //  Route::get('modal-store', [UserController::class, 'modalStore']);
             //  Route::post('delete', [UserController::class, 'delete']);
