@@ -33,22 +33,33 @@ var KTSigninGeneral = function () {
                     if (i == 'Valid') {
 
                         // Fazer consulta ajax com as credenciai
-                        
+
+                        btnSubmitElement.setAttribute("data-kt-indicator", "on");
+
                         axios({
                             method: 'post',
                             url: routeSignIn,
                             data: {
-                                firstName: document.getElementById('email'),
-                                lastName: document.getElementById('password')
+                                email: document.getElementById('email').value,
+                                password: document.getElementById('password').value
                             }
-                        });
+                        }).then((response) => {
 
-                        btnSubmitElement.setAttribute("data-kt-indicator", "on");
-                        btnSubmitElement.disabled = !0;
+                            btnSubmitElement.setAttribute("data-kt-indicator", "off");
 
-                        setTimeout((function () {
-                            btnSubmitElement.removeAttribute("data-kt-indicator"),
-                                btnSubmitElement.disabled = !1,
+                            if (response.data.status == 'error') {
+
+                                Swal.fire({
+                                    text: response.data.message,
+                                    icon: response.data.status,
+                                    buttonsStyling: !1,
+                                    confirmButtonText: "OK",
+                                    customClass: { confirmButton: "btn btn-primary" }
+                                })
+
+                            } else {
+                                btnSubmitElement.removeAttribute("data-kt-indicator");
+                                btnSubmitElement.disabled = !1;
                                 Swal.fire({
                                     text: "Você foi autênticado com sucesso!",
                                     icon: "success",
@@ -60,15 +71,19 @@ var KTSigninGeneral = function () {
                                         e.isConfirmed && (formElement.querySelector('[name="email"]').value = "",
                                             formElement.querySelector('[name="password"]').value = "")
 
-                                        // window.location.href = '/';
+                                        window.location.href = '/';
                                     }))
-                        }), 1000)
+                            }
+                        })
+
+                        btnSubmitElement.setAttribute("data-kt-indicator", "off");
+                        // btnSubmitElement.disabled = !0;
 
                     } else {
 
                         Swal.fire({
-                            text: "Ops! Algo deu errado, espere alguns segundos e tente novamente.",
-                            icon: "error",
+                            text: "Verifique o formulário.",
+                            icon: "warning",
                             buttonsStyling: !1,
                             confirmButtonText: "Ok!",
                             customClass: { confirmButton: "btn btn-primary" }

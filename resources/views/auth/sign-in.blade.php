@@ -68,7 +68,7 @@ License: For each use you must have a valid license purchased only from above li
                             <!--end::Title-->
                             <!--begin::Link-->
                             <div class="text-gray-400 fw-bold fs-4">Novo aqui?
-                                <a href="../../demo2/dist/authentication/flows/basic/sign-up.html"
+                                <a href="{{route('auth.sign-up')}}"
                                     class="link-primary fw-bolder">Crie uma conta</a>
                             </div>
                             <!--end::Link-->
@@ -80,8 +80,8 @@ License: For each use you must have a valid license purchased only from above li
                             <label class="form-label fs-6 fw-bolder text-dark">Email</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input class="form-control form-control-lg form-control-solid" type="text" name="email"
-                                autocomplete="off" />
+                            <input class="form-control form-control-lg form-control-solid" type="text" id="email"
+                                name="email" autocomplete="off" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -100,7 +100,7 @@ License: For each use you must have a valid license purchased only from above li
                             <!--end::Wrapper-->
                             <!--begin::Input-->
                             <input class="form-control form-control-lg form-control-solid" type="password"
-                                name="password" autocomplete="off" />
+                                id="password" name="password" autocomplete="off" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
