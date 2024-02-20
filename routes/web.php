@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     AuthorController,
     DepartmentController,
+    DiaryController,
     DocumentController,
     DocumentStatusController,
     DocumentTypeController,
@@ -16,6 +17,7 @@ use App\Http\Controllers\{
     PostController,
     UserController,
 };
+use App\Models\Diary;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,29 +33,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('/', function ($locale = null) {
-    // return redirect('/' .config('locales.default'));
     
     if(Auth::check()) {
         return view('admin.index');
     } else {
-        return view('landing');
+        return view('landing', [
+            'diaries' => Diary::all()
+        ]);
     }
 
 })->name('index');
 
 Route::prefix('/')->group(function() {
-
-    // Route::get('/', function ($locale = null) {
-        
-    //     if ($locale && in_array($locale, config( 'locales'))) {
-    //         App::setLocale($locale);
-    //     } else {
-    //         return redirect('/' .config('locales.default'));
-    //     }
-        
-    //     return view('index');
-
-    // });
 
     Route::prefix('/auth')->group(function() {
     
@@ -72,6 +63,16 @@ Route::prefix('/')->group(function() {
     })->name('admin.index');
     
     Route::prefix('management')->group(function() {
+
+        Route::prefix('diary')->group(function() {
+            Route::get('list', [DiaryController::class, 'list'])->name('admin.diaries.list');
+            Route::get('view-list', [DiaryController::class, 'viewList'])->name('management.diaries.view-list');
+            Route::post('store', [DiaryController::class, 'store'])->name('admin.diaries.store');
+            Route::get('view-store', [DiaryController::class, 'viewStore'])->name('admin.diaries.view-store');
+            Route::get('delete/{diary}', [DiaryController::class, 'delete'])->name('admin.diaries.delete');
+            Route::get('search', [DiaryController::class, 'search'])->name('management.diaries.search');
+            Route::get('download/{diary}', [DiaryController::class, 'download'])->name('management.diaries.download');
+        });
 
         Route::prefix('author')->group(function() {
             Route::get('index', [AuthorController::class, 'index']);

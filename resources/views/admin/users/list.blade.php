@@ -791,7 +791,12 @@
     </div>
 @endsection
 
+@push('scripts')
+
+    
+
+@endpush
+
 @section('footer')
-    ;
     @include('layouts.admin.footer');
 @endsection

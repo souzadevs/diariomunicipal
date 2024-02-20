@@ -26,7 +26,7 @@
         </div>
         <!--end::Page title-->
         <!--begin::Actions-->
-        <div class="d-flex align-items-center py-3 py-md-1">
+        {{-- <div class="d-flex align-items-center py-3 py-md-1">
             <!--begin::Wrapper-->
             <div class="me-4">
                 <!--begin::Menu-->
@@ -120,7 +120,7 @@
             <!--begin::Button-->
             <a href="#" class="btn btn-bg-white btn-active-color-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_create_app" id="kt_toolbar_primary_button">Create</a>
             <!--end::Button-->
-        </div>
+        </div> --}}
         <!--end::Actions-->
     </div>
     <!--end::Container-->
