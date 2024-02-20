@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 class ResponseHelper
 {
-    public static function success($message, $data = null, $errorMessage = null)
+    public static function success($message, $data = null)
     {
         $response = [
             'status' => 'success',
@@ -15,22 +15,18 @@ class ResponseHelper
             $response['data'] = $data;
         }
 
-        if ($errorMessage && config('app.debug')) {
-            $response['errorMessage'] = $errorMessage;
-        }
-
         return $response;
     }
 
-    public static function error($message, $errorMessage = null, $code = null)
+    public static function error($message, $debugMessage = null, $code = null)
     {
         $response = [
             'status' => 'error',
             'message' => $message,
         ];
 
-        if ($errorMessage && config('app.debug')) {
-            $response['errorMessage'] = $errorMessage;
+        if ($debugMessage && config('app.debug')) {
+            $response['debugMessage'] = $debugMessage;
         }
     
         return $response;
